@@ -1,0 +1,21 @@
+{
+  "name": "linked-list",
+  "version": "1.0.0",
+  "main": "./dist-cjs/index.js",
+  "types": "./dist-types/index.d.ts",
+  "module": "./dist-es/index.js",
+  "license": "Apache V2",
+  "devDependencies": {
+    "@tsconfig/recommended": "1.0.1",
+    "concurrently": "7.0.0",
+    "ts-node": "10.3.0"
+  },
+  "scripts": {
+    "test": "yarn test:unit",
+    "test:unit": "ts-mocha test/**/*.spec.ts",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:es": "tsc -p tsconfig.es.json",
+    "build": "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+    "build:types": "tsc -p tsconfig.types.json"
+  }
+}

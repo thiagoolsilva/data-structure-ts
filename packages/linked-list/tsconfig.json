@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "incremental": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "useUnknownInCatchVariables": false
+  },
+  "exclude": ["test/"]
+}

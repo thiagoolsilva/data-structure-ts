@@ -1,0 +1,45 @@
+{
+  "name": "data-structure-ts",
+  "private": true,
+  "version": "1.0.0",
+  "repository": "git@github.com:thiagoolsilva/data-structure-ts.git",
+  "author": "thiago lopes da silva <thiagoolsilva@gmail.com>",
+  "license": "Apache V2",
+  "scripts": {
+    "enable-node-environment": "nvm use",
+    "projects:bootstrap": "./node_modules/.bin/lerna bootstrap",
+    "build:all": "./node_modules/.bin/lerna run build"
+  },
+  "devDependencies": {
+    "husky": "4.2.3",
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "eslint": "8.11.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
+    "eslint-plugin-sort-export-all": "1.2.1",
+    "@typescript-eslint/eslint-plugin": "5.15.0",
+    "@typescript-eslint/parser": "5.15.0",
+    "prettier": "2.5.1",
+    "lerna": "3.22.1",
+    "typescript": "4.4.3",
+    "lint-staged": "10.0.1"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "packages/**/src/**/*.ts": [
+      "./node_modules/eslint/bin/eslint.js  --fix",
+      "./node_modules/prettier/bin-prettier.js --write"
+    ],
+    "**/*.{ts,js,md,json}": "prettier --write"
+  }
+}
