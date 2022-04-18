@@ -23,4 +23,9 @@ export interface LinkedListInterface<T> {
   getLast(): T | undefined;
   getFirst(): T | undefined;
   indexOf(item: T): number;
+  remove(index: number): void;
+  removeTail(): void;
+  getSize(): number;
+  clear(): void;
+  isEmpty(): boolean;
 }

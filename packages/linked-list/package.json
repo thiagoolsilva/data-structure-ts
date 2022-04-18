@@ -11,6 +11,7 @@
     "ts-node": "10.3.0"
   },
   "scripts": {
+    "start": "ts-node src/playground.ts",
     "test": "yarn test:unit",
     "test:unit": "ts-mocha test/**/*.spec.ts",
     "build:cjs": "tsc -p tsconfig.cjs.json",

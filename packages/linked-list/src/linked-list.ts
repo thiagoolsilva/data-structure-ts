@@ -19,21 +19,61 @@ import { LinkedListNode } from "./linked-node";
 
 export class LinkedList<T> implements LinkedListInterface<T> {
   private head: LinkedListNode<T> | null = null;
-  private tail: LinkedListNode<T>;
+  private tail: LinkedListNode<T> | null = null;
+  private size = 0;
 
   public constructor(item: T) {
     this.head = new LinkedListNode(item);
     this.tail = this.head;
+    this.size++;
   }
 
+  /**
+   * Return true if linked list is empty
+   * @returns true if Linked List is empty false otherwise
+   */
+  public isEmpty(): boolean {
+    return this.size == 0;
+  }
+
+  /**
+   * Clear linked list
+   */
+  public clear(): void {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
+
+  /**
+   * Get the size of the linked list
+   * @returns the size of the linked list
+   */
+  public getSize(): number {
+    return this.size;
+  }
+
+  /**
+   * Get the first node of linked list
+   * @returns The node or undefined
+   */
   public getFirst(): T | undefined {
     return this.head?.value;
   }
 
+  /**
+   * Get the last node of linked list
+   * @returns the node or undefined
+   */
   public getLast(): T | undefined {
-    return this.tail.value;
+    return this.tail?.value;
   }
 
+  /**
+   * Get the item by index
+   * @param item item
+   * @returns index of the item or -1 if not found
+   */
   public indexOf(item: T): number {
     let indexFound = -1;
     const invalidIndex = -1;
@@ -48,6 +88,58 @@ export class LinkedList<T> implements LinkedListInterface<T> {
     }
 
     return invalidIndex;
+  }
+
+  /**
+   * Remove tail node
+   */
+  public removeTail(): void {
+    // https://visualgo.net/en/list
+    let pre = this.head || null;
+    let temp = pre?.next;
+
+    while (temp != null) {
+      // tempNode -> node2 -> node3 -> null
+      temp = temp?.next;
+      if (temp != null) pre = pre?.next || null;
+    }
+
+    if (pre?.next) {
+      pre.next = null;
+    }
+    if (pre) {
+      this.tail = pre;
+    }
+    this.size--;
+  }
+
+  /**
+   * Remove the node by index
+   * @param index index of the node
+   */
+  public remove(index: number): void {
+    // https://visualgo.net/en/list
+    let preNode = this.head || null;
+    for (let count = 0; count < index - 1; count++) {
+      // go to the next inner node
+      preNode = preNode?.next || null;
+    }
+    // preNode -> deleteNode -> nextNode -> null
+    let deleteNode = preNode?.next || null;
+    // preNode -> deleteNode -> nextNode -> null
+    const nextNode = deleteNode?.next || null;
+    if (preNode?.next) {
+      preNode.next = nextNode;
+    }
+    // remove node from chain
+    deleteNode = null;
+
+    // update tail node
+    if (index === this.size && preNode) {
+      this.tail = preNode;
+    }
+    // decrease size
+    this.size--;
   }
 
   /**
@@ -94,13 +186,11 @@ export class LinkedList<T> implements LinkedListInterface<T> {
    */
   public add(index: number, item: T): void {
     // https://visualgo.net/en/list
-
     // check if the item must be inserted in the begging of linked list
     if (index == 0) {
       this.addFirst(item);
       return;
     }
-
     // [0]node1 -> [1]node2 -> [2]node3 -> [3]node4 -> null
     let preNode = this.head || null;
     // Big O(N)
@@ -108,16 +198,20 @@ export class LinkedList<T> implements LinkedListInterface<T> {
       // go to the next inner node
       preNode = preNode?.next || null;
     }
-
     if (preNode) {
       const newNode = new LinkedListNode(item);
-      // [0]node1 -> [1]node2 -> [2]node3(preNode) -> [3]newNode -> [4]node4 -> null
+      // [0]node1 -> [1]node2 -> [2]node3(preNode) -> [3]newNode -> null
       newNode.next = preNode?.next || null;
-      if (preNode?.next) {
-        preNode.next = newNode;
+      // set next node
+      preNode.next = newNode;
+      // update linked list size
+      this.size++;
+      // update tail node
+      if (index === this.size && preNode) {
+        this.tail = newNode;
       }
     } else {
-      throw new Error("index not found");
+      throw new Error("index not found.");
     }
   }
 
@@ -127,10 +221,19 @@ export class LinkedList<T> implements LinkedListInterface<T> {
   public addLast(item: T): void {
     // https://visualgo.net/en/list
     const newNode = new LinkedListNode(item);
-    // node1 -> node2 -> node3 ->  newNode -> null
-    this.tail.next = newNode;
-    // node1 -> node2 -> node3 -> tail -> newNode -> null
-    this.tail = newNode;
+
+    if (this.isEmpty()) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      // node1 -> node2 -> node3 ->  newNode -> null
+      if (this.tail?.next) {
+        this.tail.next = newNode;
+      }
+      // node1 -> node2 -> node3 -> tail -> newNode -> null
+      this.tail = newNode;
+    }
+    this.size++;
   }
 
   /**
@@ -143,5 +246,11 @@ export class LinkedList<T> implements LinkedListInterface<T> {
     newNode.next = this.head;
     // head -> node2 -> node1 | null
     this.head = newNode;
+    // increase linked list size
+    this.size++;
+    // set tail node
+    if (this.size == 1) {
+      this.tail = newNode;
+    }
   }
 }

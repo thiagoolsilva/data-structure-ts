@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
-export * from "./linked-list";
-export * from "./linked-list.interface";
-export * from "./linked-node";
+import { LinkedList } from "./linked-list";
+
+const linkedList = new LinkedList<string>("Thiago");
+console.log(JSON.stringify(linkedList));
+
+linkedList.clear();
+
+console.log(JSON.stringify(linkedList));
+
+linkedList.addLast("Thiago");
+
+console.log(JSON.stringify(linkedList));
