@@ -29,4 +29,5 @@ export interface LinkedListInterface<T> {
   clear(): void;
   isEmpty(): boolean;
   toArray(): T[];
+  toFilteredArray(items: T[]): T[];
 }

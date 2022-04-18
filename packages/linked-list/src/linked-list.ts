@@ -70,6 +70,32 @@ export class LinkedList<T> implements LinkedListInterface<T> {
   }
 
   /**
+   * Returns an array containing all of the elements in this list in proper sequence.
+   * @param items items that will be used to filter items
+   * @returns filtered items
+   */
+  public toFilteredArray(items: T[]): T[] {
+    const result: T[] = [];
+    let nextNode = this.head || null;
+    // convert linked list to hashMap using Big O(N)
+    const itemHashMap = new Map<T, boolean>();
+    for (const item of items) {
+      itemHashMap.set(item, true);
+    }
+    // Check if Items exists in HashMap using Big O(N)
+    while (nextNode) {
+      const value = nextNode.value;
+      if (itemHashMap.has(value)) {
+        // push value to array
+        result.push(nextNode.value);
+      }
+      // go to next node
+      nextNode = nextNode.next;
+    }
+    return result;
+  }
+
+  /**
    * Returns an array containing all of the elements in this linked list in proper sequence.
    * @returns the array of the linked list
    */

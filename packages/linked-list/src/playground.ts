@@ -24,3 +24,6 @@ console.log(JSON.stringify(linkedList));
 
 const myArray = linkedList.toArray();
 console.log(JSON.stringify(myArray));
+
+const myFilteredArray = linkedList.toFilteredArray(["da"]);
+console.log(JSON.stringify(myFilteredArray));
