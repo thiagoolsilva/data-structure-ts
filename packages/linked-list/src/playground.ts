@@ -17,12 +17,10 @@
 import { LinkedList } from "./linked-list";
 
 const linkedList = new LinkedList<string>("Thiago");
+linkedList.addLast("lopes");
+linkedList.addLast("da");
+linkedList.addLast("silva");
 console.log(JSON.stringify(linkedList));
 
-linkedList.clear();
-
-console.log(JSON.stringify(linkedList));
-
-linkedList.addLast("Thiago");
-
-console.log(JSON.stringify(linkedList));
+const myArray = linkedList.toArray();
+console.log(JSON.stringify(myArray));

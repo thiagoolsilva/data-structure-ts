@@ -70,6 +70,22 @@ export class LinkedList<T> implements LinkedListInterface<T> {
   }
 
   /**
+   * Returns an array containing all of the elements in this linked list in proper sequence.
+   * @returns the array of the linked list
+   */
+  public toArray(): T[] {
+    const result: T[] = [];
+    let nextNode = this.head || null;
+    while (nextNode) {
+      // push value to array
+      result.push(nextNode.value);
+      // go to next node
+      nextNode = nextNode.next;
+    }
+    return result;
+  }
+
+  /**
    * Get the item by index
    * @param item item
    * @returns index of the item or -1 if not found
@@ -187,7 +203,7 @@ export class LinkedList<T> implements LinkedListInterface<T> {
   public add(index: number, item: T): void {
     // https://visualgo.net/en/list
     // check if the item must be inserted in the begging of linked list
-    if (index == 0) {
+    if (this.isEmpty()) {
       this.addFirst(item);
       return;
     }
@@ -227,7 +243,7 @@ export class LinkedList<T> implements LinkedListInterface<T> {
       this.tail = newNode;
     } else {
       // node1 -> node2 -> node3 ->  newNode -> null
-      if (this.tail?.next) {
+      if (this.tail) {
         this.tail.next = newNode;
       }
       // node1 -> node2 -> node3 -> tail -> newNode -> null

@@ -28,4 +28,5 @@ export interface LinkedListInterface<T> {
   getSize(): number;
   clear(): void;
   isEmpty(): boolean;
+  toArray(): T[];
 }
